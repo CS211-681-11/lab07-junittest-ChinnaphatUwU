@@ -18,39 +18,54 @@ class StudentListTest {
     @Test
     @DisplayName("test addNewStudent")
     void testAddNewStudent() {
-        String id = "6710405291";
-        String name = "A";
-        list.addNewStudent(id,name);
-        assertEquals(id,list.findStudentById("6710405291").getId());
-        assertEquals(name,list.findStudentById("6710405291").getName());
+        list.addNewStudent("6710405291", "A");
+        assertEquals("A", list.getStudents().get(0).getName());
     }
 
     @Test
     @DisplayName("test addNewStudent + score")
     void testAddNewStudentAndScore() {
-        String id = "6710405292";
-        String name = "B";
-        double score = 10.0;
-        list.addNewStudent(id,name,score);
-        assertEquals(id,list.findStudentById("6710405292").getId());
-        assertEquals(name,list.findStudentById("6710405292").getName());
-        assertEquals(score,list.findStudentById("6710405292").getScore());
+        list.addNewStudent("6710405291", "A",10.0);
+        assertEquals("A", list.getStudents().get(0).getName());
+        assertEquals(10.0, list.getStudents().get(0).getScore());
     }
 
     @Test
     @DisplayName("test findStudentById")
     void testFindStudentById() {
-        String id = "6710405293";
-        String name = "C";
-        double score = 10.0;
-        list.addNewStudent(id,name,score);
-        Student a = list.findStudentById("6710405293");
-        assertEquals(a,list.findStudentById("6710405293"));
+        list.addNewStudent("6710405291", "A");
+        Student student = list.findStudentById("6710405291");
+        assertEquals("A", student.getName());
+
     }
 
     @Test
     @DisplayName("test filterByName")
     void testFilterByName() {
+        list.addNewStudent("6710405291", "A");
+        list.addNewStudent("6710405292", "B");
+        list.addNewStudent("6710405293", "C");
+        StudentList list2 = list.filterByName("B");
+        assertEquals("B", list2.getStudents().get(0).getName());
 
     }
+
+    @Test
+    @DisplayName("test giveScoreToId")
+    void testGiveScoreToId() {
+        list.addNewStudent("6710405291", "A");
+        list.giveScoreToId("6710405291", 50);
+        assertEquals(50, list.getStudents().get(0).getScore());
+
+    }
+
+    @Test
+    @DisplayName("test viewGradeOfId")
+    void testViewGradeOfId() {
+        list.addNewStudent("6710405291", "A",100.00);
+        assertEquals("A", list.viewGradeOfId("6710405291"));
+
+    }
+
+
 }
